@@ -1,0 +1,19 @@
+Index: src/com/wizarpos/paymentrouterclient/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wizarpos/paymentrouterclient/MainActivity.java b/src/com/wizarpos/paymentrouterclient/MainActivity.java
+--- a/src/com/wizarpos/paymentrouterclient/MainActivity.java	(revision 38911)
++++ b/src/com/wizarpos/paymentrouterclient/MainActivity.java	(revision 38912)
+@@ -160,7 +160,9 @@
+ 		default:
+ 			if (mWizarPayment == null) {
+ 				response = "Please click [ConnectPaymentRouter First]!";
+-			} else if (null == (param = getParam(btnId))) {
++			} else if(!mWizarPayment.asBinder().isBinderAlive()){
++				response = "Please click [ConnectPaymentRouter First]!";
++			}else if (null == (param = getParam(btnId))) {
+ 				response = "Call parameter failed!";
+ 			}
+ 			if (response == "") {

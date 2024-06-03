@@ -1,0 +1,38 @@
+Index: AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+--- a/AndroidManifest.xml	(revision 38745)
++++ b/AndroidManifest.xml	(revision 38746)
+@@ -40,6 +40,7 @@
+ 
+         <receiver android:name="com.wizarpos.paymentrouterclient.BroadReceiver" >
+             <intent-filter>
++                <action android:name="com.wizarpos.bkm.SETTLE_REQUEST"/>
+                 <action android:name="com.wizarpos.bkm.EFD_STARTED"/>
+                 <action android:name="com.wizarpos.bkm.EFD_FINISHED"/>
+             </intent-filter>
+Index: src/com/wizarpos/paymentrouterclient/BroadReceiver.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wizarpos/paymentrouterclient/BroadReceiver.java b/src/com/wizarpos/paymentrouterclient/BroadReceiver.java
+--- a/src/com/wizarpos/paymentrouterclient/BroadReceiver.java	(revision 38745)
++++ b/src/com/wizarpos/paymentrouterclient/BroadReceiver.java	(revision 38746)
+@@ -47,12 +47,10 @@
+                 String OfflineNegativeAmount = bundle.getString("BatchNum","000000000000");
+             }else{
+                 //End of day failed
+-
+-
+             }
+ 
+             //If the activity of your app is not at the top level,pull up to the top
+-            if(!isMainActivityAlive(MainActivity._Context,activityName)){
++            if(!isMainActivityAlive(context,activityName)){
+                 Intent intentMainActivity = new Intent(context, MainActivity.class);
+                 intentMainActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                 context.startActivity(intentMainActivity);

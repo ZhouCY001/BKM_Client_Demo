@@ -1,0 +1,192 @@
+Index: res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/res/values/styles.xml b/res/values/styles.xml
+--- a/res/values/styles.xml	(revision 38912)
++++ b/res/values/styles.xml	(revision 38913)
+@@ -21,5 +21,6 @@
+         <item name="android:layout_width">wrap_content</item>
+         <item name="android:layout_height">wrap_content</item>
+         <item name="android:layout_weight">1</item>
++        <item name="android:textSize">15dp</item>
+     </style>
+ </resources>
+Index: src/com/wizarpos/paymentrouterclient/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wizarpos/paymentrouterclient/MainActivity.java b/src/com/wizarpos/paymentrouterclient/MainActivity.java
+--- a/src/com/wizarpos/paymentrouterclient/MainActivity.java	(revision 38912)
++++ b/src/com/wizarpos/paymentrouterclient/MainActivity.java	(revision 38913)
+@@ -35,6 +35,8 @@
+ import java.nio.ByteBuffer;
+ import java.nio.CharBuffer;
+ import java.nio.charset.Charset;
++import java.util.Timer;
++import java.util.TimerTask;
+ 
+ import utils.StringUtil;
+ 
+@@ -214,7 +216,10 @@
+ 					case R.id.exchangeKey:		result = mWizarPayment.exchangeKey		();	break;
+ 					case R.id.downParams:		result = mWizarPayment.downloadParams	();	break;
+ 					case R.id.payCash:
+-					case R.id.voidSale:			result = mWizarPayment.transact			(param);	break;
++					case R.id.voidSale:
++						//TODO Test the cancelTransaction
++						cancelTransaction();
++						result = mWizarPayment.transact			(param);	break;
+ 					case R.id.getAcquirerList:
+ 						String[] acqList = mWizarPayment.getAcquirerList();
+ 						result = "AcquirerList:";
+@@ -232,8 +237,6 @@
+ 					case R.id.setPubCert:		result = mWizarPayment.setPubCert		(param);	break;
+ 					case R.id.setMMK:			result = mWizarPayment.setMMK			(param);	break;
+ 					case R.id.setParams:		result = mWizarPayment.setParams		(param);	break;
+-
+-
+ 					}
+ 				} catch (RemoteException e) {
+ 					result = e.getMessage();
+@@ -384,6 +387,23 @@
+ 	}
+ 
+ 
++	private void cancelTransaction(){
++		Timer timer =new Timer();
++		timer.schedule(
++			new TimerTask() {
++				@Override
++				public void run() {
++					try {
++						mWizarPayment.cancelTransaction();
++					} catch (RemoteException e) {
++						e.printStackTrace();
++					}
++				}
++			}
++			,3000);
++	}
++
++
+ 
+ 	public static byte[] readFile(Context context , String fileName, int readLength) {
+ 		char[] bRet = null;
+@@ -431,4 +451,5 @@
+ 	}
+ 
+ 
++
+ }
+Index: src/com/wizarpos/paymentrouterclient/BroadReceiver.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wizarpos/paymentrouterclient/BroadReceiver.java b/src/com/wizarpos/paymentrouterclient/BroadReceiver.java
+--- a/src/com/wizarpos/paymentrouterclient/BroadReceiver.java	(revision 38912)
++++ b/src/com/wizarpos/paymentrouterclient/BroadReceiver.java	(revision 38913)
+@@ -74,12 +74,6 @@
+                 //End of day failed
+             }
+ 
+-            //If the activity of your app is not at the top level,pull up to the top
+-            if(!isMainActivityAlive(context,activityName)){
+-                Intent intentMainActivity = new Intent(context, MainActivity.class);
+-                intentMainActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+-                context.startActivity(intentMainActivity);
+-            }
+         }
+ 
+     }
+Index: src/com/wizarpos/bkm/aidl/ICloudPay.aidl
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wizarpos/bkm/aidl/ICloudPay.aidl b/src/com/wizarpos/bkm/aidl/ICloudPay.aidl
+--- a/src/com/wizarpos/bkm/aidl/ICloudPay.aidl	(revision 38912)
++++ b/src/com/wizarpos/bkm/aidl/ICloudPay.aidl	(revision 38913)
+@@ -14,4 +14,5 @@
+ 	String exchangeKey();
+ 	String downloadParams();
+ 	String setParams(String jsonData); //support change MMK/PubCert/Ip/Port
++	void cancelTransaction();
+ }
+\ No newline at end of file
+Index: res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/res/layout/activity_main.xml b/res/layout/activity_main.xml
+--- a/res/layout/activity_main.xml	(revision 38912)
++++ b/res/layout/activity_main.xml	(revision 38913)
+@@ -44,6 +44,11 @@
+                     android:id="@+id/getVirtualSN"
+                     style="@style/btn_menu_style"
+                     android:text="getSN" />
++
++                <Button
++                    android:id="@+id/setVirtualSN"
++                    style="@style/btn_menu_style"
++                    android:text="setSN" />
+             </LinearLayout>
+ 
+             <LinearLayout
+@@ -55,10 +60,6 @@
+                 android:layout_below="@id/line1"
+                 >
+ 
+-                <Button
+-                    android:id="@+id/setVirtualSN"
+-                    style="@style/btn_menu_style"
+-                    android:text="setSN" />
+                 <Button
+                     android:id="@+id/setPubCert"
+                     style="@style/btn_menu_style"
+@@ -69,6 +70,11 @@
+                     style="@style/btn_menu_style"
+                     android:text="setMMK" />
+ 
++                <Button
++                    android:id="@+id/getAcquirerList"
++                    style="@style/btn_menu_style"
++                    android:text="getBankList" />
++
+ 
+             </LinearLayout>
+ 
+@@ -121,10 +127,7 @@
+                 android:layout_height="wrap_content"
+                 android:layout_below="@id/line4" >
+ 
+-                <Button
+-                    android:id="@+id/getAcquirerList"
+-                    style="@style/btn_menu_style"
+-                    android:text="getBankList" />
++
+ 
+                 <Button
+                     android:id="@+id/selectAcquirer"
+@@ -138,6 +141,7 @@
+ 
+ 
+ 
++
+             </LinearLayout>
+ 
+             <LinearLayout
+@@ -158,9 +162,6 @@
+             </LinearLayout>
+ 
+ 
+-
+-
+-
+         </LinearLayout>
+     </ScrollView>
+ 

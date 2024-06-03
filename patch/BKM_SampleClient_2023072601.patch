@@ -1,0 +1,47 @@
+Index: src/com/wizarpos/paymentrouterclient/BroadReceiver.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wizarpos/paymentrouterclient/BroadReceiver.java b/src/com/wizarpos/paymentrouterclient/BroadReceiver.java
+--- a/src/com/wizarpos/paymentrouterclient/BroadReceiver.java	(revision 38832)
++++ b/src/com/wizarpos/paymentrouterclient/BroadReceiver.java	(revision 38833)
+@@ -17,6 +17,7 @@
+     static String packageName = "com.wizarpos.paymentrouterclient";
+     static String activityName = "com.wizarpos.paymentrouterclient.MainActivity";
+ 
++    public String EFD_REQUEST_ACTION = "com.wizarpos.bkm.SETTLE_REQUEST";//Start End of day
+     public String EFD_START_ACTION = "com.wizarpos.bkm.EFD_STARTED";//Start End of day
+     public String EFD_END_ACTION = "com.wizarpos.bkm.EFD_FINISHED";//Finished End of day
+ 
+@@ -45,6 +46,30 @@
+                 String OnlineNegativeAmount = bundle.getString("BatchNum","000000000000");
+                 String OfflinePositiveAmount = bundle.getString("BatchNum","000000000000");
+                 String OfflineNegativeAmount = bundle.getString("BatchNum","000000000000");
++
++
++                String MerchantName = bundle.getString("MerchantName","");
++                String Address = bundle.getString("Address","");
++                String MID = bundle.getString("MID","");
++                String TID = bundle.getString("TID","");
++
++                String SaleCount = bundle.getString("SaleCount","");
++                String SaleAmount = bundle.getString("SaleAmount","");
++
++                String VoidCount = bundle.getString("VoidCount","");
++                String VoidAmount = bundle.getString("VoidAmount","");
++
++                String RefundCount = bundle.getString("RefundCount","");
++                String RefundAmount = bundle.getString("RefundAmount","");
++
++                String AuthCompCount = bundle.getString("AuthCompCount","");
++                String AuthCompAmount = bundle.getString("AuthCompAmount","");
++
++                String InstallmentCount = bundle.getString("InstallmentCount","");
++                String InstallmentAmount = bundle.getString("InstallmentAmount","");
++
++                String TotalCount = bundle.getString("TotalCount","");
++                String TotalAmount = bundle.getString("TotalAmount","");
+             }else{
+                 //End of day failed
+             }

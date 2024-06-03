@@ -1,0 +1,61 @@
+Index: src/com/wizarpos/paymentrouterclient/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wizarpos/paymentrouterclient/MainActivity.java b/src/com/wizarpos/paymentrouterclient/MainActivity.java
+--- a/src/com/wizarpos/paymentrouterclient/MainActivity.java	(revision 39198)
++++ b/src/com/wizarpos/paymentrouterclient/MainActivity.java	(revision 39199)
+@@ -57,7 +57,6 @@
+ 	public static int PRO_PORT1 = 12121;
+ 	public static String PRO_IP2 = "62.244.244.94";
+ 	public static int PRO_PORT2 = 12121;
+-
+ 	public static String TEST_IP1 = "31.145.171.94";
+ 	public static int TEST_PORT1 = 12121;
+ 	public static String TEST_IP2 = "31.145.171.94";
+@@ -74,7 +73,7 @@
+ 		int[] btnIds = { R.id.bind, R.id.unbind,R.id.setVirtualSN
+ 			, R.id.payCash, R.id.voidSale, R.id.selectAcquirer,R.id.getAcquirerList
+ 			, R.id.exchangeKey,R.id.downParams
+-			, R.id.printlast, R.id.settle
++			, R.id.printlast, R.id.settle,R.id.queryInfo
+ 			,R.id.getVirtualSN,R.id.setPubCert,R.id.setMMK,R.id.setParams
+ 		};
+ 		for (int id : btnIds) {
+@@ -193,6 +192,7 @@
+ 			case R.id.setPubCert:			setParam4SetPubCert			(jsonObject);	break;
+ 			case R.id.setMMK:				setParam4SetMMK				(jsonObject);	break;
+ 			case R.id.setParams:			setParam4SetParams			(jsonObject);	break;
++			case R.id.queryInfo:			setParam4getPOSInfo			(jsonObject);	break;
+ 
+ 			}
+ 		} catch (JSONException e) {
+@@ -237,6 +237,7 @@
+ 					case R.id.setPubCert:		result = mWizarPayment.setPubCert		(param);	break;
+ 					case R.id.setMMK:			result = mWizarPayment.setMMK			(param);	break;
+ 					case R.id.setParams:		result = mWizarPayment.setParams		(param);	break;
++					case R.id.queryInfo:		result = mWizarPayment.getPOSInfo		(param);	break;
+ 					}
+ 				} catch (RemoteException e) {
+ 					result = e.getMessage();
+Index: res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/res/layout/activity_main.xml b/res/layout/activity_main.xml
+--- a/res/layout/activity_main.xml	(revision 39198)
++++ b/res/layout/activity_main.xml	(revision 39199)
+@@ -139,7 +139,10 @@
+                     style="@style/btn_menu_style"
+                     android:text="PrintLast" />
+ 
+-
++                <Button
++                    android:id="@+id/queryInfo"
++                    style="@style/btn_menu_style"
++                    android:text="queryInfo" />
+ 
+ 
+             </LinearLayout>

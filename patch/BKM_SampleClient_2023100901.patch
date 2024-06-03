@@ -1,0 +1,17 @@
+Index: src/com/wizarpos/paymentrouterclient/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wizarpos/paymentrouterclient/MainActivity.java b/src/com/wizarpos/paymentrouterclient/MainActivity.java
+--- a/src/com/wizarpos/paymentrouterclient/MainActivity.java	(revision 39116)
++++ b/src/com/wizarpos/paymentrouterclient/MainActivity.java	(revision 39117)
+@@ -342,6 +342,8 @@
+ 		jsonObject.put("MMK", StringUtil.toString(bMMK));
+ //		jsonObject.put("virtualSN", clientSN);
+ 		jsonObject.put("passWord", "123456");
++		//Change the workSpace password (used for void/cancel/refund) , the lenngth should be 4-8
++		jsonObject.put("newWorkspacePassword","0000");
+ 
+ 		//"0" means false,
+ 		//"1" means true, auto do the settlement in BKM app , after 'request' event timeout.

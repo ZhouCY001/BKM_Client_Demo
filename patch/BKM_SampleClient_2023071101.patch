@@ -1,0 +1,93 @@
+Index: AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+--- a/AndroidManifest.xml	(revision 38737)
++++ b/AndroidManifest.xml	(revision 38738)
+@@ -40,7 +40,8 @@
+ 
+         <receiver android:name="com.wizarpos.paymentrouterclient.BroadReceiver" >
+             <intent-filter>
+-                <action android:name="com.wizarpos.bkm.EndOfDay"/>
++                <action android:name="com.wizarpos.bkm.EFD_STARTED"/>
++                <action android:name="com.wizarpos.bkm.EFD_FINISHED"/>
+             </intent-filter>
+         </receiver>
+ 
+Index: src/com/wizarpos/paymentrouterclient/BroadReceiver.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/wizarpos/paymentrouterclient/BroadReceiver.java b/src/com/wizarpos/paymentrouterclient/BroadReceiver.java
+--- a/src/com/wizarpos/paymentrouterclient/BroadReceiver.java	(revision 38737)
++++ b/src/com/wizarpos/paymentrouterclient/BroadReceiver.java	(revision 38738)
+@@ -2,10 +2,8 @@
+ 
+ import android.app.ActivityManager;
+ import android.content.BroadcastReceiver;
+-import android.content.ComponentName;
+ import android.content.Context;
+ import android.content.Intent;
+-import android.os.Build;
+ import android.os.Bundle;
+ import android.util.Log;
+ 
+@@ -18,26 +16,46 @@
+ 
+     static String packageName = "com.wizarpos.paymentrouterclient";
+     static String activityName = "com.wizarpos.paymentrouterclient.MainActivity";
++
++    public String EFD_START_ACTION = "com.wizarpos.bkm.EFD_STARTED";//Start End of day
++    public String EFD_END_ACTION = "com.wizarpos.bkm.EFD_FINISHED";//Finished End of day
++
+     @Override
+     public void onReceive(Context context, Intent intent) {
+         Log.i(TAG, intent.getAction());
+ 
+-        if ("com.wizarpos.bkm.EndOfDay".equals(intent.getAction())){
++        if (EFD_END_ACTION.equals(intent.getAction())){
+             Bundle bundle = intent.getExtras();
+             for (String key: bundle.keySet())
+             {
+                 Log.i(TAG, "Key=" + key + ", value=" +bundle.get(key));
+             }
+ 
++            if(bundle.containsKey("Approved") &&bundle.getBoolean("Approved")) { // end of day succeed
++                //The details of the batch info
++                String BatchNum = bundle.getString("BatchNum","000000");
++                String Currency = bundle.getString("BatchNum","949");
++
++                String OnlinePositiveCount = bundle.getString("BatchNum","0000");
++                String OnlineNegativeCount = bundle.getString("BatchNum","0000");
++                String OfflinePositiveCount = bundle.getString("BatchNum","0000");
++                String OfflineNegativeCount = bundle.getString("BatchNum","0000");
++
++                String OnlinePositiveAmount = bundle.getString("BatchNum","000000000000");
++                String OnlineNegativeAmount = bundle.getString("BatchNum","000000000000");
++                String OfflinePositiveAmount = bundle.getString("BatchNum","000000000000");
++                String OfflineNegativeAmount = bundle.getString("BatchNum","000000000000");
++            }else{
++                //End of day failed
++
++
++            }
++
++            //If the activity of your app is not at the top level,pull up to the top
+             if(!isMainActivityAlive(MainActivity._Context,activityName)){
+-                ComponentName cn = new ComponentName(packageName, activityName);
+-                Intent mIntent = new Intent();
+-                mIntent.setComponent(cn);
+-                mIntent.setFlags( Intent.FLAG_ACTIVITY_SINGLE_TOP);
+-
+-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+-                    context.startActivity(mIntent);
+-                }
++                Intent intentMainActivity = new Intent(context, MainActivity.class);
++                intentMainActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
++                context.startActivity(intentMainActivity);
+             }
+         }
+ 
