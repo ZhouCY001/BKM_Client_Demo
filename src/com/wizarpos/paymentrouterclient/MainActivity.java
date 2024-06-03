@@ -258,6 +258,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		jsonObject.put("TransType", 1);
 		jsonObject.put("TransAmount", "1");
 		jsonObject.put("timeOut", 30);// 10 means timeout after 10 seconds
+		jsonObject.put("supportQR", 1);// 0: not support QR, others: support QR
 
 	}
 
