@@ -229,7 +229,7 @@ public class MainActivity extends Activity implements OnClickListener {
 						if(!TextUtils.isEmpty(result))
 							result.substring(0,result.length()-1);
 						break;
-					case R.id.selectAcquirer:	mWizarPayment.selectDefaultAcquirer(0);		break;
+					case R.id.selectAcquirer:	mWizarPayment.selectDefaultAcquirer(2);		break;
 					case R.id.printlast:		result = mWizarPayment.printLast		(param);	break;
 					case R.id.settle:			result = mWizarPayment.settle			(param);	break;
 					case R.id.setVirtualSN:		result = mWizarPayment.setVirtualSN		(param);	break;
@@ -258,8 +258,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		jsonObject.put("TransType", 1);
 		jsonObject.put("TransAmount", "1");
 		jsonObject.put("timeOut", 30);// 10 means timeout after 10 seconds
-		jsonObject.put("supportQR", 1);// 0: not support QR, others: support QR
-
+		// 0		: disable QR function
+		// others	: enable QR function
+		jsonObject.put("supportQR", 1);
 	}
 
 	private void setParam4VoidSale(JSONObject jsonObject) throws JSONException {
@@ -271,7 +272,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		//2023/07/10 Add to skip the acquirer select function.
 		//'0' means the 1st acquirer in acquirer list ,'1' means 2nd one.
 		//You can get acquirer list by AIDL interface 'getAcquirerList()'
-		jsonObject.put("acquirerIndex", "0");
+		jsonObject.put("acquirerIndex", "2");
+
+		jsonObject.put("supportQR", 1);
 	}
 
 
@@ -356,8 +359,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		//others: clear the parameter file in DB
 		jsonObject.put("clearParamsFile", "1");
 
-
-
+		//2024 06 17
+		//Add supportMSR : 0---> disable MSR , others---> enable MSR
+		jsonObject.put("supportMSR", "1");
 	}
 
 
