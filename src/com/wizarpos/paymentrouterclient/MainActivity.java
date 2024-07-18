@@ -257,11 +257,13 @@ public class MainActivity extends Activity implements OnClickListener {
 	private void setParam4PayCash(JSONObject jsonObject) throws JSONException {
 		jsonObject.put("TransType", 1);
 		jsonObject.put("TransAmount", "1");
-		jsonObject.put("timeOut", 30);// 10 means timeout after 10 seconds
+		jsonObject.put("timeOut", 120);// 10 means timeout after 10 seconds
 		// 0		: disable QR function
 		// others	: enable QR function
 		jsonObject.put("supportQR", 1);
+		jsonObject.put("printReceipt",1);
 	}
+
 
 	private void setParam4VoidSale(JSONObject jsonObject) throws JSONException {
 		jsonObject.put("passWord", "123456");
@@ -272,9 +274,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		//2023/07/10 Add to skip the acquirer select function.
 		//'0' means the 1st acquirer in acquirer list ,'1' means 2nd one.
 		//You can get acquirer list by AIDL interface 'getAcquirerList()'
-		jsonObject.put("acquirerIndex", "2");
+		jsonObject.put("acquirerIndex", "0");
 
 		jsonObject.put("supportQR", 1);
+		jsonObject.put("printReceipt",1);
 	}
 
 
@@ -282,10 +285,12 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	private void setParam4getPrintLast(JSONObject jsonObject) throws JSONException {
+		jsonObject.put("printReceipt",1);
 	}
 
 	private void setParam4settle(JSONObject jsonObject) throws JSONException {
 		jsonObject.put("TransType", 21);
+		jsonObject.put("printReceipt",1);
 	}
 
 	private void setParam4SetVirtualSN(JSONObject jsonObject) throws JSONException {
@@ -353,7 +358,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		//"0" means false,
 		//"1" means true, auto do the settlement in BKM app , after 'request' event timeout.
 		jsonObject.put("autoSettleAfterTimeout", "1");
-
 		//2024/04/28
 		//"0": do nothing,
 		//others: clear the parameter file in DB
