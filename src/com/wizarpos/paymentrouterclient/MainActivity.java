@@ -74,6 +74,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			, R.id.payCash, R.id.voidSale, R.id.selectAcquirer,R.id.getAcquirerList
 			, R.id.exchangeKey,R.id.downParams
 			, R.id.printlast, R.id.settle,R.id.queryInfo
+			, R.id.PreAuth, R.id.AuthCancel,R.id.AuthComp
 			,R.id.getVirtualSN,R.id.setPubCert,R.id.setMMK,R.id.setParams
 		};
 		for (int id : btnIds) {
@@ -157,7 +158,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.bind:				bindPaymentRouter();    break;
 		case R.id.unbind:			unbindPaymentRouter();  break;
 		case R.id.setVirtualSN:		showInputDialog("Please input SN",12,btnId);		break;
-		case R.id.voidSale:			showInputDialog("Please input Transaction Num",6,btnId);		break;
+		case R.id.voidSale:
+		case R.id.AuthCancel:		showInputDialog("Please input Transaction Num",6,btnId);		break;
 		default:
 			if (mWizarPayment == null) {
 				response = "Please click [ConnectPaymentRouter First]!";
@@ -181,6 +183,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			switch(btnId) {
 			case R.id.payCash:				setParam4PayCash(jsonObject);	break;
 			case R.id.voidSale:				setParam4VoidSale(jsonObject);	break;
+			case R.id.PreAuth:				setParam4PreAuth(jsonObject);	break;
+			case R.id.AuthCancel:			setParam4AuthCancel(jsonObject);	break;
+			case R.id.AuthComp:				setParam4AuthComp(jsonObject);	break;
 			case R.id.exchangeKey:
 			case R.id.downParams:
 			case R.id.getAcquirerList:
@@ -217,8 +222,9 @@ public class MainActivity extends Activity implements OnClickListener {
 					case R.id.downParams:		result = mWizarPayment.downloadParams	();	break;
 					case R.id.payCash:
 					case R.id.voidSale:
-						//TODO Test the cancelTransaction
-//						cancelTransaction();
+					case R.id.PreAuth:
+					case R.id.AuthCancel:
+					case R.id.AuthComp:
 						result = mWizarPayment.transact			(param);	break;
 					case R.id.getAcquirerList:
 						String[] acqList = mWizarPayment.getAcquirerList();
@@ -277,6 +283,41 @@ public class MainActivity extends Activity implements OnClickListener {
 		jsonObject.put("acquirerIndex", "0");
 
 		jsonObject.put("supportQR", 1);
+		jsonObject.put("printReceipt",1);
+	}
+
+	private void setParam4PreAuth(JSONObject jsonObject) throws JSONException {
+		jsonObject.put("TransType", 2);
+		jsonObject.put("TransAmount", "1");
+		jsonObject.put("timeOut", 120);// 10 means timeout after 10 seconds
+
+		jsonObject.put("acquirerIndex", "0");
+
+		if(transactionNum!=null && transactionNum.length()!=0)
+			jsonObject.put("oriTransactionNum", transactionNum);
+
+		// 0		: disable QR function
+		// others	: enable QR function
+		jsonObject.put("supportQR", 1);
+		jsonObject.put("printReceipt",1);
+	}
+
+	private void setParam4AuthCancel(JSONObject jsonObject) throws JSONException {
+		jsonObject.put("passWord", "123456");
+		jsonObject.put("TransType", 107);
+		jsonObject.put("acquirerIndex", "0");
+
+		jsonObject.put("printReceipt",1);
+	}
+
+	private void setParam4AuthComp(JSONObject jsonObject) throws JSONException {
+		jsonObject.put("passWord", "123456");
+		jsonObject.put("TransType", 109);
+
+		jsonObject.put("TransAmount", "1");
+
+		jsonObject.put("acquirerIndex", "0");
+
 		jsonObject.put("printReceipt",1);
 	}
 
@@ -386,7 +427,9 @@ public class MainActivity extends Activity implements OnClickListener {
 				public void onClick(DialogInterface dialog, int which) {
 					switch (btnID){
 					case R.id.setVirtualSN: 	clientSN = editText.getText().toString(); 				break;
-					case R.id.voidSale:			transactionNum = editText.getText().toString(); 		break;
+					case R.id.voidSale:
+					case R.id.AuthCancel:
+						transactionNum = editText.getText().toString(); 		break;
 					}
 
 					if (mWizarPayment == null) {

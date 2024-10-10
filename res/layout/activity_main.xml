@@ -151,6 +151,31 @@
                 android:id="@+id/line6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/line4" >
+
+
+
+                <Button
+                    android:id="@+id/PreAuth"
+                    style="@style/btn_menu_style"
+                    android:text="PreAuth" />
+
+                <Button
+                    android:id="@+id/AuthCancel"
+                    style="@style/btn_menu_style"
+                    android:text="AuthCancel" />
+
+                <Button
+                    android:id="@+id/AuthComp"
+                    style="@style/btn_menu_style"
+                    android:text="AuthComp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/line7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/line5" >
                 <Switch
                     android:id="@+id/switch_test"
