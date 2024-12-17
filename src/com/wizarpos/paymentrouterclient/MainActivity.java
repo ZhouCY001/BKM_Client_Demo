@@ -72,7 +72,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		int[] btnIds = { R.id.bind, R.id.unbind,R.id.setVirtualSN
 			, R.id.payCash, R.id.voidSale, R.id.selectAcquirer,R.id.getAcquirerList
-			, R.id.exchangeKey,R.id.downParams
+			, R.id.exchangeKey,R.id.downParams,R.id.setDisableBins
 			, R.id.printlast, R.id.settle,R.id.queryInfo
 			, R.id.PreAuth, R.id.AuthCancel,R.id.AuthComp
 			,R.id.getVirtualSN,R.id.setPubCert,R.id.setMMK,R.id.setParams
@@ -220,6 +220,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					switch(btnIds[0]) {
 					case R.id.exchangeKey:		result = mWizarPayment.exchangeKey		();	break;
 					case R.id.downParams:		result = mWizarPayment.downloadParams	();	break;
+					case R.id.setDisableBins:	mWizarPayment.setDisableCardBins(setParam4PayCash());	break;
 					case R.id.payCash:
 					case R.id.voidSale:
 					case R.id.PreAuth:
@@ -259,6 +260,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		};
 	}
 
+	private String setParam4PayCash(){
+		String binList = "6789|56789|456789";	//Each card bin must be separated by '|'
+
+		return binList;
+	}
 
 	private void setParam4PayCash(JSONObject jsonObject) throws JSONException {
 		jsonObject.put("TransType", 1);

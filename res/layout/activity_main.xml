@@ -94,6 +94,11 @@
                     style="@style/btn_menu_style"
                     android:text="downParams" />
 
+                <Button
+                    android:id="@+id/setDisableBins"
+                    style="@style/btn_menu_style"
+                    android:text="setDisableBins" />
+
             </LinearLayout>
 
 
