@@ -15,4 +15,5 @@ interface ICloudPay{
 	String downloadParams();
 	String setParams(String jsonData); //support change MMK/PubCert/Ip/Port
 	void cancelTransaction();
+	void setDisableCardBins(String binList);
 }
