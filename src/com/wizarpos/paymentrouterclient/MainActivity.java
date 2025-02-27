@@ -1,5 +1,6 @@
 package com.wizarpos.paymentrouterclient;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 
 import com.wizarpos.bkm.aidl.ICloudPay;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,7 +74,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		int[] btnIds = { R.id.bind, R.id.unbind,R.id.setVirtualSN
 			, R.id.payCash, R.id.voidSale, R.id.selectAcquirer,R.id.getAcquirerList
-			, R.id.exchangeKey,R.id.downParams,R.id.setDisableBins
+			, R.id.exchangeKey,R.id.downParams
+			,R.id.setBinBlackList, R.id.getBinBlackList
 			, R.id.printlast, R.id.settle,R.id.queryInfo
 			, R.id.PreAuth, R.id.AuthCancel,R.id.AuthComp
 			,R.id.getVirtualSN,R.id.setPubCert,R.id.setMMK,R.id.setParams
@@ -198,7 +201,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			case R.id.setMMK:				setParam4SetMMK				(jsonObject);	break;
 			case R.id.setParams:			setParam4SetParams			(jsonObject);	break;
 			case R.id.queryInfo:			setParam4getPOSInfo			(jsonObject);	break;
-
+			case R.id.setBinBlackList:		setParam4BlackList			(jsonObject);	break;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -207,7 +210,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		return jsonObject.toString();
 	}
 
-	private AsyncTask<Integer, Void, String> createAsyncTask() {
+	@SuppressLint("StaticFieldLeak")
+    private AsyncTask<Integer, Void, String> createAsyncTask() {
 		return new AsyncTask<Integer, Void, String>() {
 			protected void onPreExecute() {
 				showResponse("...");
@@ -220,7 +224,8 @@ public class MainActivity extends Activity implements OnClickListener {
 					switch(btnIds[0]) {
 					case R.id.exchangeKey:		result = mWizarPayment.exchangeKey		();	break;
 					case R.id.downParams:		result = mWizarPayment.downloadParams	();	break;
-					case R.id.setDisableBins:	mWizarPayment.setDisableCardBins(setParam4PayCash());	break;
+					case R.id.setBinBlackList:	mWizarPayment.setBinBlackList			(param);	break;
+					case R.id.getBinBlackList:	result = mWizarPayment.getBinBlackList			();	break;
 					case R.id.payCash:
 					case R.id.voidSale:
 					case R.id.PreAuth:
@@ -236,7 +241,7 @@ public class MainActivity extends Activity implements OnClickListener {
 						if(!TextUtils.isEmpty(result))
 							result.substring(0,result.length()-1);
 						break;
-					case R.id.selectAcquirer:	mWizarPayment.selectDefaultAcquirer(2);		break;
+					case R.id.selectAcquirer:	mWizarPayment.selectDefaultAcquirer(0);		break;
 					case R.id.printlast:		result = mWizarPayment.printLast		(param);	break;
 					case R.id.settle:			result = mWizarPayment.settle			(param);	break;
 					case R.id.setVirtualSN:		result = mWizarPayment.setVirtualSN		(param);	break;
@@ -260,10 +265,15 @@ public class MainActivity extends Activity implements OnClickListener {
 		};
 	}
 
-	private String setParam4PayCash(){
-		String binList = "6789|56789|456789";	//Each card bin must be separated by '|'
+	private void setParam4BlackList(JSONObject jsonObject) throws JSONException{
+		String pan1 = "2320120000013461";
+		String pan2 = "6214623521000872179";
 
-		return binList;
+		JSONArray jsonArray = new JSONArray();
+		jsonArray.put(pan1);
+		jsonArray.put(pan2);
+		jsonObject.put("BlackList",jsonArray);
+
 	}
 
 	private void setParam4PayCash(JSONObject jsonObject) throws JSONException {
