@@ -13,7 +13,7 @@
         android:id="@+id/scroller"
         android:scrollbarFadeDuration="600000"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="210dp"
         android:layout_weight="1"
         >
         <LinearLayout
@@ -57,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:layout_below="@id/line1"
                 >
 
                 <Button
@@ -82,7 +81,7 @@
                 android:id="@+id/line3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/line2" >
+                >
 
                 <Button
                     android:id="@+id/exchangeKey"
@@ -101,12 +100,30 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/line4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/line3" >
+                >
+
+                <Button
+                    android:id="@+id/setBinBlackList"
+                    style="@style/btn_menu_style"
+                    android:text="setBlackList" />
+
+                <Button
+                    android:id="@+id/getBinBlackList"
+                    style="@style/btn_menu_style"
+                    android:text="getBlackList" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
 
 
                 <Button
@@ -127,10 +144,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/line5"
+                android:id="@+id/line6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/line4" >
+                >
 
 
 
@@ -153,10 +170,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/line6"
+                android:id="@+id/line7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/line4" >
+                >
 
 
 
@@ -177,22 +194,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/line7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/line5" >
-                <Switch
-                    android:id="@+id/switch_test"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Test Key"/>
-                <Button
-                    android:id="@+id/setParams"
-                    style="@style/btn_menu_style"
-                    android:text="setParams" />
-
-            </LinearLayout>
 
 
         </LinearLayout>
@@ -200,9 +201,29 @@
 
     <LinearLayout
         android:id="@+id/line8"
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/scroller"
+        android:layout_weight="1"
+        >
+        <Switch
+            android:id="@+id/switch_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test Key"/>
+        <Button
+            android:id="@+id/setParams"
+            style="@style/btn_menu_style"
+            android:text="setParams" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line8"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -217,7 +238,6 @@
             android:id="@+id/line12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/line10"
             android:orientation="horizontal">
 
             <TextView
@@ -235,7 +255,6 @@
             android:id="@+id/line14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/line12"
             android:orientation="horizontal">
 
             <TextView
@@ -254,7 +273,6 @@
             android:id="@+id/line16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/line14"
             android:orientation="horizontal">
 
             <TextView
