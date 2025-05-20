@@ -1,3 +1,10 @@
+20/05/2025
+Update:
+Add a new int param 'autoSelectACQ' in AIDL method: String setParams(String jsonData);
+if 'autoSelectACQ' ==0 , disable the auto ACQ , else enable the auto ACQ.
+If 'autoSelectACQ' is not provided, the Auto ACQ function is enabled by default.
+
+
 28/2/2025
 Update:
 Add the 'getBinBlackList' to get the DisableCardBin list from the payment app.
