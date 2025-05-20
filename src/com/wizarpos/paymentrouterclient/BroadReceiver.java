@@ -35,17 +35,17 @@ public class BroadReceiver  extends BroadcastReceiver {
             if(bundle.containsKey("Approved") &&bundle.getBoolean("Approved")) { // end of day succeed
                 //The details of the batch info
                 String BatchNum = bundle.getString("BatchNum","000000");
-                String Currency = bundle.getString("BatchNum","949");
+                String Currency = bundle.getString("Currency","949");
 
-                String OnlinePositiveCount = bundle.getString("BatchNum","0000");
-                String OnlineNegativeCount = bundle.getString("BatchNum","0000");
-                String OfflinePositiveCount = bundle.getString("BatchNum","0000");
-                String OfflineNegativeCount = bundle.getString("BatchNum","0000");
+                String OnlinePositiveCount = bundle.getString("OnlinePositiveCount","0000");
+                String OnlineNegativeCount = bundle.getString("OnlineNegativeCount","0000");
+                String OfflinePositiveCount = bundle.getString("OfflinePositiveCount","0000");
+                String OfflineNegativeCount = bundle.getString("OfflineNegativeCount","0000");
 
-                String OnlinePositiveAmount = bundle.getString("BatchNum","000000000000");
-                String OnlineNegativeAmount = bundle.getString("BatchNum","000000000000");
-                String OfflinePositiveAmount = bundle.getString("BatchNum","000000000000");
-                String OfflineNegativeAmount = bundle.getString("BatchNum","000000000000");
+                String OnlinePositiveAmount = bundle.getString("OnlinePositiveAmount","000000000000");
+                String OnlineNegativeAmount = bundle.getString("OnlineNegativeAmount","000000000000");
+                String OfflinePositiveAmount = bundle.getString("OfflinePositiveAmount","000000000000");
+                String OfflineNegativeAmount = bundle.getString("OfflineNegativeAmount","000000000000");
 
 
                 String MerchantName = bundle.getString("MerchantName","");
