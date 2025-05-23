@@ -1,3 +1,9 @@
+23/05/2025
+Update:
+add 'terminalFloorLimit'
+
+
+
 20/05/2025
 Update:
 Add a new int param 'autoSelectACQ' in AIDL method: String setParams(String jsonData);
