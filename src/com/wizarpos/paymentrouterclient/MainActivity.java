@@ -427,6 +427,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		//20250520
 		//Add autoSelectACQ: 0--> disable auto select ACQ function, others --> enable auto select ACQ
 		jsonObject.put("autoSelectACQ","1");
+
+		//20250523
+		//Add terminalFloorLimit
+		jsonObject.put("terminalFloorLimit",500); //When a currency has 2 decimal places,it means limit is 5.00
 	}
 
 
