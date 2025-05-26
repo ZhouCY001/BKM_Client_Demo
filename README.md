@@ -1,3 +1,49 @@
+26/05/2025
+Update:
+add 'getAIDFloorLimit'
+The returned data is in the format of a JSON ArrayList, with the following structure:
+aid: String
+terminalFloorLimit: Int
+isContactless: Boolean
+
+Example:
+{
+  "aids": [
+    {
+      "aid": "A0000000041010",
+      "isContactless": false,
+      "terminalFloorLimit": 0
+    },
+    {
+      "aid": "A00000002501",
+      "isContactless": false,
+      "terminalFloorLimit": 0
+    },
+    {
+      "aid": "A0000000032010",
+      "isContactless": false,
+      "terminalFloorLimit": 0
+    },
+    ...
+    {
+      "aid": "A000000152301092",
+      "isContactless": true,
+      "terminalFloorLimit": 75000
+    },
+    {
+      "aid": "A000000152301091",
+      "isContactless": true,
+      "terminalFloorLimit": 75000
+    }
+  ]
+}
+
+
+
+
+
+
+
 23/05/2025
 Update:
 add 'terminalFloorLimit'
