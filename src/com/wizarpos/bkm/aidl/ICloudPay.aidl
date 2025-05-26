@@ -17,4 +17,5 @@ interface ICloudPay{
 	void cancelTransaction();
 	void setBinBlackList(String binList);
 	String getBinBlackList();
+	String getAIDFloorLimit();
 }

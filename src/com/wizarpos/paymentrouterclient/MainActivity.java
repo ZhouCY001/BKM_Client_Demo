@@ -75,7 +75,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		int[] btnIds = { R.id.bind, R.id.unbind,R.id.setVirtualSN
 			, R.id.payCash, R.id.voidSale, R.id.selectAcquirer,R.id.getAcquirerList
 			, R.id.exchangeKey,R.id.downParams
-			,R.id.setBinBlackList, R.id.getBinBlackList
+			,R.id.setBinBlackList, R.id.getBinBlackList,R.id.getLimit
 			, R.id.printlast, R.id.settle,R.id.queryInfo
 			, R.id.PreAuth, R.id.AuthCancel,R.id.AuthComp
 			,R.id.getVirtualSN,R.id.setPubCert,R.id.setMMK,R.id.setParams
@@ -226,6 +226,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					case R.id.downParams:		result = mWizarPayment.downloadParams	();	break;
 					case R.id.setBinBlackList:	mWizarPayment.setBinBlackList			(param);	break;
 					case R.id.getBinBlackList:	result = mWizarPayment.getBinBlackList			();	break;
+					case R.id.getLimit:			result = mWizarPayment.getAIDFloorLimit();	break;
 					case R.id.payCash:
 					case R.id.voidSale:
 					case R.id.PreAuth:

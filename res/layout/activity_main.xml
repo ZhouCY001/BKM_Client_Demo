@@ -116,6 +116,11 @@
                     style="@style/btn_menu_style"
                     android:text="getBlackList" />
 
+                <Button
+                    android:id="@+id/getLimit"
+                    style="@style/btn_menu_style"
+                    android:text="getLimit" />
+
             </LinearLayout>
 
 
